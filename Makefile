@@ -16,14 +16,19 @@ clean:
 	rm -f *.zip
 	rm -f *.dat
 
+db: geoip.dat geosite.dat mmdb
+
+mmdb:
+	wget https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb
+
 geoip.dat:
-	wget https://github.com/v2fly/geoip/raw/release/geoip.dat
+	wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
 
 geoip-only-cn-private.dat:
 	wget https://github.com/v2fly/geoip/raw/release/geoip-only-cn-private.dat
 
 geosite.dat:
-	wget https://github.com/v2fly/domain-list-community/raw/release/dlc.dat -O geosite.dat
+	wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
 
 test:
 	# Disable Bloomfilter when testing
