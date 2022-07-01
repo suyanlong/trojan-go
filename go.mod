@@ -6,7 +6,7 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/google/uuid v1.1.2
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
-	github.com/refraction-networking/utls v0.0.0-20210713165636-0b2885c8c0d4
+	github.com/refraction-networking/utls v1.1.0
 	github.com/shadowsocks/go-shadowsocks2 v0.1.5
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/stretchr/testify v1.7.0
@@ -43,6 +43,7 @@ require (
 require github.com/cloudquery/sqlite v1.0.1
 
 require (
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
 	github.com/txthinking/runnergroup v0.0.0-20210608031112-152c7c4432bf // indirect
