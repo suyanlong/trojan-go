@@ -9,7 +9,7 @@ VAR_SETTING := -X $(PACKAGE_NAME)/constant.Version=$(VERSION) -X $(PACKAGE_NAME)
 GOBUILD = $(GO_DIR)go build -tags "full" -trimpath -ldflags="-s -w -buildid= $(VAR_SETTING)" -o $(BUILD_DIR)
 
 .PHONY: trojan-go release test
-normal: clean trojan-go
+normal: trojan-go
 
 clean:
 	rm -rf $(BUILD_DIR)
