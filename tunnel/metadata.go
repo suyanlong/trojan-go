@@ -107,7 +107,9 @@ func NewAddressFromAddr(network string, addr string) (*Address, error) {
 		return nil, err
 	}
 	port, err := strconv.ParseInt(portStr, 10, 32)
-	common.Must(err)
+	if err != nil {
+		return nil, err
+	}
 	return NewAddressFromHostPort(network, host, int(port)), nil
 }
 
