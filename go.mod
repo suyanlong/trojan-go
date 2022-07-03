@@ -12,7 +12,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/txthinking/socks5 v0.0.0-20210716140126-fa1f52a8f2da
 	github.com/v2fly/v2ray-core/v4 v4.42.1
-	github.com/xtaci/smux v1.5.15
+	github.com/xtaci/smux v1.5.16
 	golang.org/x/net v0.0.0-20220630215102-69896b714898
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac
