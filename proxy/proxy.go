@@ -2,7 +2,6 @@ package proxy
 
 import (
 	"context"
-	"fmt"
 	"io"
 	"math/rand"
 	"os"
@@ -13,6 +12,7 @@ import (
 	"github.com/p4gefau1t/trojan-go/config"
 	"github.com/p4gefau1t/trojan-go/log"
 	"github.com/p4gefau1t/trojan-go/tunnel"
+	"github.com/pkg/errors"
 )
 
 const Name = "PROXY"
@@ -76,7 +76,7 @@ func (p *Proxy) relayConnLoop() {
 						defer bufPool.Put(buffer)
 						n, err := io.CopyBuffer(dst, src, buffer)
 						if err != nil {
-							errChan <- common.NewError(fmt.Sprintf("relayConnLoop: CopyBuffer: written = %d", n)).Base(err)
+							errChan <- errors.Wrapf(err, "relayConnLoop: CopyBuffer: written = %d", n)
 						}
 					}
 					// log.Infof("[inbound:%s]: %s -> %s", inbound.Metadata().DomainName, inbound.LocalAddr().String(), inbound.RemoteAddr())
@@ -85,8 +85,11 @@ func (p *Proxy) relayConnLoop() {
 					go copyConn(outbound, inbound)
 					select {
 					case err = <-errChan:
-						if err != nil {
-							log.Error(err)
+						switch {
+						case errors.Is(err, io.ErrClosedPipe):
+							log.Debug(err)
+						default:
+							log.Warn(err)
 						}
 					case <-p.ctx.Done():
 						log.Debug("shutting down conn relay")

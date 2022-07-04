@@ -40,10 +40,10 @@ func (s *Server) acceptConnWorker() {
 			}
 			go func(session *smux.Session, conn tunnel.Conn) {
 				defer session.Close()
-				defer conn.Close()
 				for {
 					stream, err := session.AcceptStream()
 					if err != nil {
+						//TODO
 						log.Error(err)
 						return
 					}
