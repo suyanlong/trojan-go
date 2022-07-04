@@ -2,6 +2,7 @@ package proxy
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"math/rand"
 	"os"
@@ -73,8 +74,10 @@ func (p *Proxy) relayConnLoop() {
 					copyConn := func(dst io.Writer, src io.Reader) {
 						buffer := bufPool.Get().([]byte)
 						defer bufPool.Put(buffer)
-						_, err := io.CopyBuffer(dst, src, buffer)
-						errChan <- err
+						n, err := io.CopyBuffer(dst, src, buffer)
+						if err != nil {
+							errChan <- common.NewError(fmt.Sprintf("relayConnLoop: CopyBuffer: written = %d", n)).Base(err)
+						}
 					}
 					// log.Infof("[inbound:%s]: %s -> %s", inbound.Metadata().DomainName, inbound.LocalAddr().String(), inbound.RemoteAddr())
 					// log.Infof("[outbound]: %s -> %s", outbound.LocalAddr().String(), outbound.RemoteAddr())
@@ -83,7 +86,7 @@ func (p *Proxy) relayConnLoop() {
 					select {
 					case err = <-errChan:
 						if err != nil {
-							log.Debug(err)
+							log.Error(err)
 						}
 					case <-p.ctx.Done():
 						log.Debug("shutting down conn relay")

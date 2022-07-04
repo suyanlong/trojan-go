@@ -19,7 +19,7 @@ clean:
 db: geoip.dat geosite.dat mmdb
 
 mmdb:
-	wget https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb
+	wget https://github.com/Loyalsoldier/geoip/releases/latest/download/Country.mmdb
 
 geoip.dat:
 	wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
