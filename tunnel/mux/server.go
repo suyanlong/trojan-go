@@ -2,6 +2,7 @@ package mux
 
 import (
 	"context"
+	"io"
 
 	"github.com/xtaci/smux"
 
@@ -43,8 +44,11 @@ func (s *Server) acceptConnWorker() {
 				for {
 					stream, err := session.AcceptStream()
 					if err != nil {
-						//TODO
-						log.Error(err)
+						if err == io.EOF {
+							log.Warn(err)
+						} else {
+							log.Error(err)
+						}
 						return
 					}
 					select {

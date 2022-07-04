@@ -88,8 +88,10 @@ func (p *Proxy) relayConnLoop() {
 						switch {
 						case errors.Is(err, io.ErrClosedPipe):
 							log.Debug(err)
-						default:
+						case errors.Is(err, io.EOF), strings.HasSuffix(err.Error(), "read: connection reset by peer"), strings.HasSuffix(err.Error(), "use of closed network connection"):
 							log.Warn(err)
+						default:
+							log.Error(err)
 						}
 					case <-p.ctx.Done():
 						log.Debug("shutting down conn relay")
